@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "inlineSourceMap": true,
+    "declaration": true,
+    "declarationDir": "../../lib",
+    "outDir": "../../lib",
+    "target": "es2017"
+  },
+  "files": ["index.ts"],
+  "include": ["src/data"],
+  "exclude": ["node_modules"]
+}

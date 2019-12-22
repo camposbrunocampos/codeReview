@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Brex Challenge",
+    "slug": "brexchallenge",
+    "privacy": "unlisted",
+    "sdkVersion": "32.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.1",
+    "orientation": "portrait",
+    "icon": "./src/images/icon.png",
+    "splash": {
+      "image": "./src/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["./src/images/*", "./src/fonts/*"],
+    "packagerOpts": {
+      "config": "./rn-cli.config.js"
+    }
+  }
+}
