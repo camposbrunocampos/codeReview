@@ -7,7 +7,8 @@
     "platforms": ["ios", "android"],
     "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./src/images/icon.png",
+		"icon": "./src/images/icon.png",
+		"backgroundColor": "#fafafa",
     "splash": {
       "image": "./src/images/splash.png",
       "resizeMode": "contain",

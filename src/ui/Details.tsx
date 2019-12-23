@@ -1,27 +1,36 @@
 import React, { Component } from "react"
-import { View, Text, Button } from "react-native";
+import { View } from "react-native";
 
-import styles from "./../styles";
-import Colors from "./../resources/Colors";
+import { TransactionItem, DetailsItem } from "./../components/index";
 
-export class Details extends Component {
+type Props = {
+	navigation: any
+}
+
+export class Details extends Component<Props> {
 
 	static navigationOptions = {
-		title: 'Details',
-		headerTitleStyle: { color: Colors.PRIMARY_TEXT },
-		headerTintColor: Colors.HIGHLIGHT_COLOR
+		title: 'Details'
 	};
 
+	_onItemClicked = () => {
+		console.log("cilck")
+	}
+
 	render() {
+		const transaction = this.props.navigation.getParam('response')
+		const hasTransaction = transaction !== null && transaction !== undefined
+		console.log(transaction)
+
 		return (
-			<View style={styles.container}>
-				<Text>Details Screen</Text>
-				<Button
-          title="Go To Change Category"
-          onPress={() =>
-            this.props.navigation.navigate('ChangeCategory')
-          }
-        />
+			<View>
+				{hasTransaction &&
+					<View>
+						<TransactionItem transaction={transaction} />
+						<DetailsItem />
+					</View>
+				}
+
 			</View>
 		)
 	}
