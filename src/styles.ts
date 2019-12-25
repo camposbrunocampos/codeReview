@@ -1,10 +1,8 @@
-import { StyleSheet } from "react-native";
-import { Colors, Dimens } from "./resources/index";
+import { StyleSheet } from "react-native"
+import { Colors, Dimens } from "./resources/index"
 
 export default StyleSheet.create({
 	cardItemContainer: {
-		flex: 1,
-		flexDirection: "row",
 		justifyContent: "space-between",
 		backgroundColor: Colors.BACKGROUND_COLOR,
 		paddingTop: Dimens.PADDING_XLARGE,
@@ -22,15 +20,41 @@ export default StyleSheet.create({
 	merchantName: {
 		color: Colors.PRIMARY_TEXT,
 		fontWeight: "bold",
-		marginBottom: Dimens.MARGIN_MEDIUM
+		fontSize: Dimens.FONT_LARGE
 	},
 	transactionAmount: {
 		fontSize: Dimens.FONT_LARGE,
 		fontWeight: "bold"
 	},
+	detailsTitle: {
+		fontSize: Dimens.FONT_MEDIUM,
+		fontWeight: "600",
+		color: Colors.PRIMARY_TEXT,
+		marginBottom: Dimens.MARGIN_SMALL
+	},
 	descriptionText: {
 		fontSize: Dimens.FONT_SMALL,
-		fontWeight: "bold",
-		color: Colors.SECONDARY_TEXT
+		fontWeight: "600",
+		color: Colors.SECONDARY_TEXT,
+		marginTop: Dimens.MARGIN_MEDIUM
+	},
+	detailsDescription: {
+		color: Colors.PRIMARY_TEXT
+	},
+	detailsHighlight: {
+		color: Colors.HIGHLIGHT_COLOR
+	},
+	itemDetailsLine: {
+		flexDirection: "row",
+		justifyContent: "space-between"
+	},
+	errorScreenContainer: {
+		flex: 1,
+		backgroundColor: Colors.BACKGROUND_COLOR,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	row: {
+		flexDirection: "row"
 	}
 });

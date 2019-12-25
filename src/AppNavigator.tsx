@@ -1,5 +1,5 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { Transactions, Details, ChangeCategory } from './ui/index';
+import { createStackNavigator, createAppContainer } from "react-navigation"
+import { Transactions, Details, ChangeCategory } from "./ui/index"
 
 import { Colors, Dimens } from "./resources/index"
 

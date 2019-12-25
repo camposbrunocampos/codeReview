@@ -12,7 +12,9 @@ export const Dimens = {
 	MARGIN_LARGE: 14,
 	MARGIN_XLARGE: 16,
 	FONT_SMALL: 12,
-	FONT_LARGE: 16
+	FONT_MEDIUM: 14,
+	FONT_REGULAR: 16,
+	FONT_LARGE: 18
 }
 
 Object.freeze(Dimens)

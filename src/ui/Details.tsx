@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import { View } from "react-native";
+import { View } from "react-native"
 
-import { TransactionItem, DetailsItem } from "./../components/index";
+import { TransactionItem, DetailsItem, DetailsCategoryItem } from "./../components/index"
 
 type Props = {
 	navigation: any
@@ -19,18 +19,18 @@ export class Details extends Component<Props> {
 
 	render() {
 		const transaction = this.props.navigation.getParam('response')
-		const hasTransaction = transaction !== null && transaction !== undefined
-		console.log(transaction)
+		const merchantCategory = transaction.merchant.merchantCategory.name
 
 		return (
 			<View>
-				{hasTransaction &&
-					<View>
-						<TransactionItem transaction={transaction} />
-						<DetailsItem />
-					</View>
-				}
-
+				<TransactionItem
+					transaction={transaction}
+				/>
+				<DetailsItem
+					transaction={transaction}
+				/>
+				<DetailsCategoryItem
+					category={merchantCategory} />
 			</View>
 		)
 	}

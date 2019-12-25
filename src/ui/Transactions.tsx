@@ -1,9 +1,10 @@
 import React, { Component } from "react"
-import { View, FlatList, Text, Button } from "react-native"
+import { View, FlatList } from "react-native"
 
 import { TransactionItem } from "./../components/index"
 import Client from "./../../lib/index"
 import { Strings } from "./../resources/index"
+import { ErrorScreen } from "./ErrorScreen"
 
 type Props = {
 }
@@ -60,7 +61,11 @@ export class Transactions extends Component<Props, State> {
 		if (client != null && clickedTransactionID !== null) {
 			client.fetchTransaction(clickedTransactionID)
 				.then((response: Object[]) => {
-					this.props.navigation.navigate('Details', { response })
+					if (response !== null && response !== undefined){
+						this.props.navigation.navigate('Details', { response })
+					} else {
+						this.setState({ isTransactionDetailError: true })
+					}
 				}).catch((err: any) => {
 					this.setState({ isTransactionDetailError: true })
 				})
@@ -100,7 +105,7 @@ export class Transactions extends Component<Props, State> {
 		const errorName = isTransactionError ? Strings.ERROR_LOADING_TRANSACTIONS_LIST : Strings.ERROR_LOADING_TRANSACTION_DETAILS
 
 		return (
-			<View>
+			<View style={{flex: 1}}>
 				{!hasError &&
 					<FlatList
 						data={transactions}
@@ -108,12 +113,10 @@ export class Transactions extends Component<Props, State> {
 					/>
 				}
 				{hasError &&
-					<View>
-						<Text>{errorName}</Text>
-						<Button
-							title={Strings.TRY_AGAIN}
-							onPress={() => this._onPressTryAgain()} />
-					</View>
+					<ErrorScreen
+						errorName={errorName}
+						onActionButtonClicked={() => this._onPressTryAgain()}
+					/>
 				}
 			</View>
 		)

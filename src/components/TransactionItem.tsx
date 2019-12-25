@@ -1,8 +1,8 @@
 import React from "react"
 import { View, TouchableHighlight, Text } from "react-native"
 
-import styles from "./../styles";
-import { Colors } from "./../resources/index";
+import styles from "./../styles"
+import { Colors } from "./../resources/index"
 
 type Props = {
 	transaction: any,
@@ -22,7 +22,7 @@ export const TransactionItem = (props: Props) => {
 		<TouchableHighlight
 			onPress={onItemClicked}
 			underlayColor={Colors.BACKGROUND_COLOR}>
-			<View style={styles.cardItemContainer}>
+			<View style={[styles.cardItemContainer, styles.row]}>
 				<View style={styles.merchantInfoContainer}>
 					<Text style={styles.merchantName}>{merchantName}</Text>
 					<Text style={styles.descriptionText}>{merchantCategory}</Text>
