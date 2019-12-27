@@ -13,6 +13,7 @@ export const DetailsItem = (props: Props) => {
 	const { transaction } = props
 
 	const purchaseDateTime = new Date(transaction.purchaseTime)
+	//This could be done with the moment.js library
 	const month = purchaseDateTime.toLocaleString('default', { month: 'short' })
 	const day = purchaseDateTime.getDay()
 	const time = purchaseDateTime.toLocaleTimeString([], { timeStyle: 'short' })

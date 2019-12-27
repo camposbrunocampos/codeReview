@@ -3,8 +3,8 @@ import { View, FlatList } from "react-native"
 
 import { TransactionItem } from "./../components/index"
 import Client from "./../../lib/index"
-import { Strings } from "./../resources/index"
 import { ErrorScreen } from "./ErrorScreen"
+import styles from "./../styles"
 
 type Props = {
 }
@@ -13,8 +13,8 @@ type State = {
 	client: any,
 	transactions: Array<Object>,
 	clickedTransactionID: string | number | undefined,
-	isTransactionError: boolean,
-	isTransactionDetailError: boolean
+	transactionDetails: Object[],
+	hasError: boolean
 }
 
 export class Transactions extends Component<Props, State> {
@@ -28,9 +28,9 @@ export class Transactions extends Component<Props, State> {
 			client: null,
 			transactions: [],
 			clickedTransactionID: "",
-			isTransactionError: false,
-			isTransactionDetailError: false
-		};
+			transactionDetails: [],
+			hasError: false
+		}
 	}
 
 	componentDidMount() {
@@ -39,37 +39,43 @@ export class Transactions extends Component<Props, State> {
 
 	_getTransactionList = () => {
 		const client = new Client()
-		this.setState({
-			client,
-			isTransactionError: false
-		})
+		this.setState({ client })
 
 		client.fetchTransactions()
 			.then((response: Object[]) => {
 				this.setState({ transactions: response })
 			}).catch((err: any) => {
-				this.setState({ isTransactionError: true })
+				this.setState({ hasError: true })
 			})
 	}
 
 	_getTransactionDetails = () => {
 		const { client, clickedTransactionID } = this.state
 		this.setState({
-			isTransactionDetailError: false
+			hasError: false
 		})
 
 		if (client != null && clickedTransactionID !== null) {
 			client.fetchTransaction(clickedTransactionID)
 				.then((response: Object[]) => {
-					if (response !== null && response !== undefined){
-						this.props.navigation.navigate('Details', { response })
+					if (response !== null && response !== undefined) {
+						this.setState({
+							transactionDetails: response,
+							hasError: false
+						})
+						this._goToDetailsScreen()
 					} else {
-						this.setState({ isTransactionDetailError: true })
+						this.setState({ hasError: true })
 					}
 				}).catch((err: any) => {
-					this.setState({ isTransactionDetailError: true })
+					this.setState({ hasError: true })
 				})
 		}
+	}
+
+	_goToDetailsScreen = () => {
+		const { transactionDetails } = this.state
+		this.props.navigation.navigate('Details', { transactionDetails })
 	}
 
 	_renderItem = (transaction: { id: string | number | undefined; merchant: { name: string; merchantCategory: { name: string; }; }; amount: number; }) => {
@@ -83,13 +89,13 @@ export class Transactions extends Component<Props, State> {
 		}
 	}
 
-	_onPressTryAgain = () => {
-		const { isTransactionDetailError } = this.state
+	_onPressGoBack = () => {
+		const { transactions } = this.state
 
-		if (isTransactionDetailError) {
-			this._getTransactionDetails()
-		} else {
+		if (transactions == null) {
 			this._getTransactionList()
+		} else {
+			this.setState({ hasError: false })
 		}
 	}
 
@@ -99,13 +105,10 @@ export class Transactions extends Component<Props, State> {
 	}
 
 	render() {
-		const { transactions, isTransactionError, isTransactionDetailError } = this.state
-		const hasError = isTransactionError || isTransactionDetailError
-
-		const errorName = isTransactionError ? Strings.ERROR_LOADING_TRANSACTIONS_LIST : Strings.ERROR_LOADING_TRANSACTION_DETAILS
+		const { transactions, hasError } = this.state
 
 		return (
-			<View style={{flex: 1}}>
+			<View style={styles.container}>
 				{!hasError &&
 					<FlatList
 						data={transactions}
@@ -114,8 +117,7 @@ export class Transactions extends Component<Props, State> {
 				}
 				{hasError &&
 					<ErrorScreen
-						errorName={errorName}
-						onActionButtonClicked={() => this._onPressTryAgain()}
+						onActionButtonClicked={() => this._onPressGoBack()}
 					/>
 				}
 			</View>

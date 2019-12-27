@@ -2,6 +2,9 @@ import { StyleSheet } from "react-native"
 import { Colors, Dimens } from "./resources/index"
 
 export default StyleSheet.create({
+	container: {
+		flex: 1
+	},
 	cardItemContainer: {
 		justifyContent: "space-between",
 		backgroundColor: Colors.BACKGROUND_COLOR,
@@ -48,11 +51,18 @@ export default StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between"
 	},
+	categoryItem: {
+		color: Colors.PRIMARY_TEXT,
+		fontSize: Dimens.FONT_MEDIUM
+	},
 	errorScreenContainer: {
 		flex: 1,
 		backgroundColor: Colors.BACKGROUND_COLOR,
 		alignItems: "center",
 		justifyContent: "center"
+	},
+	error: {
+		fontSize: Dimens.FONT_LARGE
 	},
 	row: {
 		flexDirection: "row"

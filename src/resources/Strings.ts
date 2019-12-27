@@ -5,9 +5,7 @@ export const Strings = {
 	WEBSITE: "Website",
 	ACCOUNTING: "ACCOUNTING",
 	CATEGORY: "QuickBooks Category",
-	ERROR_LOADING_TRANSACTIONS_LIST: "There was an error loading the transactions list",
-	ERROR_LOADING_TRANSACTION_DETAILS: "There was an error laoding the transaction details",
-	TRY_AGAIN: "Try again",
+	ERROR_MESSAGE: "An unexpected error occurred",
 	GO_BACK: "Go back to previous page"
 }
 

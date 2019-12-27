@@ -1,18 +1,23 @@
 import React from "react"
-import { View, Text, Image } from "react-native"
+import { View, Text, TouchableHighlight } from "react-native"
+import Svg from "react-native-svg"
 
 import styles from "./../styles"
-import { Strings } from "./../resources/index"
+import { Colors, Strings } from "./../resources/index"
 
 type Props = {
-	category: string
+	category: string,
+	onItemClicked?: () => any
 }
 
 export const DetailsCategoryItem = (props: Props) => {
 
-	const { category } = props
+	const { category, onItemClicked } = props
 
-	return (
+	return (		
+	<TouchableHighlight
+		onPress={onItemClicked}
+		underlayColor={Colors.BACKGROUND_COLOR}>
 		<View style={styles.cardItemContainer}>
 			<Text style={styles.detailsTitle}>{Strings.ACCOUNTING}</Text>
 			<View style={styles.itemDetailsLine}>
@@ -22,5 +27,6 @@ export const DetailsCategoryItem = (props: Props) => {
 				</Text>
 			</View>
 		</View>
+		</TouchableHighlight>
 	)
 }
