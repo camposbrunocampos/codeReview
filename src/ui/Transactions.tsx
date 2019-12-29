@@ -1,9 +1,10 @@
 import React, { Component } from "react"
-import { View, FlatList } from "react-native"
+import { View, FlatList, ActivityIndicator } from "react-native"
 
 import { TransactionItem } from "./../components/index"
 import Client from "./../../lib/index"
 import { ErrorScreen } from "./ErrorScreen"
+import { Colors } from "./../resources/index"
 import styles from "./../styles"
 
 type Props = {
@@ -14,7 +15,8 @@ type State = {
 	transactions: Array<Object>,
 	clickedTransactionID: string | number | undefined,
 	transactionDetails: Object[],
-	hasError: boolean
+	hasError: boolean,
+	isLoading: boolean
 }
 
 export class Transactions extends Component<Props, State> {
@@ -29,7 +31,8 @@ export class Transactions extends Component<Props, State> {
 			transactions: [],
 			clickedTransactionID: "",
 			transactionDetails: [],
-			hasError: false
+			hasError: false,
+			isLoading: false
 		}
 	}
 
@@ -37,26 +40,31 @@ export class Transactions extends Component<Props, State> {
 		this._getTransactionList()
 	}
 
-	_getTransactionList = () => {
+	_getTransactionList = async () => {
 		const client = new Client()
-		this.setState({ client })
+		this.setState({
+			client,
+			isLoading: true
+		})
 
-		client.fetchTransactions()
+		await client.fetchTransactions()
 			.then((response: Object[]) => {
 				this.setState({ transactions: response })
 			}).catch((err: any) => {
 				this.setState({ hasError: true })
 			})
+		this.setState({ isLoading: false })
 	}
 
-	_getTransactionDetails = () => {
+	_getTransactionDetails = async () => {
 		const { client, clickedTransactionID } = this.state
 		this.setState({
-			hasError: false
+			hasError: false,
+			isLoading: true
 		})
 
 		if (client != null && clickedTransactionID !== null) {
-			client.fetchTransaction(clickedTransactionID)
+			await client.fetchTransaction(clickedTransactionID)
 				.then((response: Object[]) => {
 					if (response !== null && response !== undefined) {
 						this.setState({
@@ -70,12 +78,15 @@ export class Transactions extends Component<Props, State> {
 				}).catch((err: any) => {
 					this.setState({ hasError: true })
 				})
+			this.setState({ isLoading: false })
 		}
 	}
 
 	_goToDetailsScreen = () => {
 		const { transactionDetails } = this.state
-		this.props.navigation.navigate('Details', { transactionDetails })
+		const transactionCategory = transactionDetails.userCategory
+
+		this.props.navigation.navigate('Details', { transactionDetails, transactionCategory })
 	}
 
 	_renderItem = (transaction: { id: string | number | undefined; merchant: { name: string; merchantCategory: { name: string; }; }; amount: number; }) => {
@@ -105,17 +116,19 @@ export class Transactions extends Component<Props, State> {
 	}
 
 	render() {
-		const { transactions, hasError } = this.state
+		const { transactions, hasError, isLoading } = this.state
 
 		return (
 			<View style={styles.container}>
-				{!hasError &&
+				{isLoading && <ActivityIndicator style={styles.loadingContainer} size="large" color={Colors.HIGHLIGHT_COLOR} />}
+
+				{!hasError && !isLoading &&
 					<FlatList
 						data={transactions}
 						renderItem={({ item }) => this._renderItem(item)}
 					/>
 				}
-				{hasError &&
+				{hasError && !isLoading &&
 					<ErrorScreen
 						onActionButtonClicked={() => this._onPressGoBack()}
 					/>

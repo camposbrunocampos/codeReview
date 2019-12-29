@@ -1,12 +1,12 @@
 import { createStackNavigator, createAppContainer } from "react-navigation"
-import { Transactions, Details, ChangeCategory } from "./ui/index"
+import { Transactions, Details, Categories } from "./ui/index"
 
 import { Colors, Dimens } from "./resources/index"
 
 const AppNavigator = createStackNavigator({
 	Transactions: { screen: Transactions },
 	Details: { screen: Details },
-	ChangeCategory: { screen: ChangeCategory }
+	Categories: { screen: Categories }
 }, {
 		defaultNavigationOptions: {
 			headerTitleStyle: { color: Colors.PRIMARY_TEXT },

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { View } from "react-native"
 import { NavigationEvents } from "react-navigation"
-import Client from "./../../lib/index"
+import Client, { Transaction, UserCategory } from "./../../lib/index"
 
 import { TransactionItem, DetailsItem, DetailsCategoryItem } from "./../components/index"
 
@@ -11,8 +11,10 @@ type Props = {
 
 type State = {
 	client: any,
-	transaction: Object[],
-	transactionCategory: string
+	transaction: Transaction,
+	transactionCategory: UserCategory,
+	transactionCategoryName: string,
+	transactionCategoryID: string
 }
 
 export class Details extends Component<Props, State> {
@@ -26,7 +28,9 @@ export class Details extends Component<Props, State> {
 		this.state = {
 			client: null,
 			transaction: this.props.navigation.getParam('transactionDetails'),
-			transactionCategory: ""
+			transactionCategory: this.props.navigation.getParam('transactionCategory'),
+			transactionCategoryName: "No Category",
+			transactionCategoryID: ""
 		}
 	}
 
@@ -42,15 +46,17 @@ export class Details extends Component<Props, State> {
 	}
 
 	_getTransactionCategory = () => {
-		const { client, transaction } = this.state
-		const transactionCategoryID = transaction.integration.id
+		const { client, transactionCategoryID } = this.state
 
 		if (client !== null) {
 			client.fetchUserCategory(transactionCategoryID)
-				.then((response) => {
+				.then((response: { name: string; id: string; } | null | undefined) => {
 					console.log(response)
 					if (response !== null && response !== undefined) {
-						this.setState({ transactionCategory: response })
+						this.setState({ 
+							transactionCategoryName: response.name,
+							transactionCategoryID: response.id
+						 })
 					}
 				}).catch((err: any) => {
 					console.log(err)
@@ -59,12 +65,14 @@ export class Details extends Component<Props, State> {
 	}
 
 	_onAccountingCellCLick = () => {
-		const { transaction } = this.state
-		this.props.navigation.navigate('ChangeCategory', { transaction })
+		const { transaction, transactionCategoryID } = this.state
+		const transactionID = transaction.id
+		
+		this.props.navigation.navigate('Categories', { transactionID, transactionCategoryID })
 	}
 
 	render() {
-		const { transaction, transactionCategory } = this.state
+		const { transaction, transactionCategoryName } = this.state
 
 		return (
 			<View>
@@ -80,7 +88,7 @@ export class Details extends Component<Props, State> {
 					transaction={transaction}
 				/>
 				<DetailsCategoryItem
-					category={transactionCategory}
+					category={transactionCategoryName}
 					onItemClicked={() => this._onAccountingCellCLick()} />
 			</View>
 		)
