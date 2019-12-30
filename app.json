@@ -8,7 +8,6 @@
     "version": "1.0.1",
     "orientation": "portrait",
 		"icon": "./src/images/icon.png",
-		"backgroundColor": "#FAFAFA",
     "splash": {
       "image": "./src/images/splash.png",
       "resizeMode": "contain",
@@ -19,7 +18,8 @@
     },
     "assetBundlePatterns": ["./src/images/*", "./src/fonts/*"],
     "packagerOpts": {
-      "config": "./rn-cli.config.js"
+			"config": "./rn-cli.config.js",
+			"sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
     }
   }
 }

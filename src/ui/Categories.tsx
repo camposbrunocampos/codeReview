@@ -30,7 +30,7 @@ export class Categories extends Component<Props, State> {
 		super(props)
 		this.state = {
 			client: new Client(),
-			categoriesList: {} as Array<UserCategory>,
+			categoriesList: [] as Array<UserCategory>,
 			selectedCategoryID: this.props.navigation.getParam('transactionCategoryID'),
 			previousSelectedCategoryID: "",
 			hasError: false,
@@ -100,6 +100,7 @@ export class Categories extends Component<Props, State> {
 
 	render() {
 		const { categoriesList, hasError, isLoading } = this.state
+		console.log(categoriesList)
 
 		return (
 			<View style={styles.container}>

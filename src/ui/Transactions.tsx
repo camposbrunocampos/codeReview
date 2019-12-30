@@ -28,7 +28,7 @@ export class Transactions extends Component<Props, State> {
 		super(props)
 		this.state = {
 			client: new Client(),
-			transactions: {} as Array<Transaction>,
+			transactions: [] as Array<Transaction>,
 			clickedTransactionID: "",
 			hasError: false,
 			isLoading: false
