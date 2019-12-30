@@ -95,12 +95,16 @@ export class Categories extends Component<Props, State> {
 	}
 
 	_onPressAlertOk = () => {
+		const { categoriesList } = this.state
 		this.setState({ hasError: false })
+
+		if (categoriesList === null) {
+			this._getCategoriesList()
+		}
 	}
 
 	render() {
 		const { categoriesList, hasError, isLoading } = this.state
-		console.log(categoriesList)
 
 		return (
 			<View style={styles.container}>

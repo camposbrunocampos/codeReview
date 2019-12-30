@@ -54,42 +54,39 @@ export class Details extends Component<Props, State> {
 			await client.fetchTransaction(transactionID)
 				.then((response) => {
 					if (response !== null && response !== undefined) {
-						this.setState({
-							transaction: response,
-							hasError: false
-						})
+						this.setState({ transaction: response })
+						this._showErrorScreen(false)
 						this._getTransactionCategory()
+					} else {
+						this._showLoading(false)
 					}
 				}).catch((err: any) => {
-					this.setState({ hasError: true })
+					this._showErrorScreen(true)
+					this._showLoading(false)
 				})
 		}
-		this.setState({ isLoading: false })
 	}
-
 
 	_getTransactionCategory = async () => {
 		const { client, transaction } = this.state
 		const userCategory = transaction.integration.category
 
 		if (client !== null && userCategory !== null && userCategory !== undefined) {
-			this.setState({
-				isLoading: true,
-				userCategoryID: userCategory.id
-			})
+			this.setState({ userCategoryID: userCategory.id })
 			await client.fetchUserCategory(userCategory.id)
 				.then((response) => {
 					if (response !== null && response !== undefined) {
 						this.setState({
 							userCategoryName: response.name,
 							userCategoryID: response.id
-						}, () => {
-							this.setState({ isLoading: false })
 						})
+						this._showLoading(false)
 					}
 				}).catch((err: any) => {
-					console.log("Couldn't find a category")
+					this._showLoading(false)
 				})
+		} else {
+			this._showLoading(false)
 		}
 	}
 
@@ -102,6 +99,14 @@ export class Details extends Component<Props, State> {
 
 	_onPressAlertOk = () => {
 		this._getTransactionDetails()
+	}
+
+	_showErrorScreen = (shouldShow: boolean) => {
+		this.setState({ hasError: shouldShow })
+	}
+
+	_showLoading = (shouldShowLoadingSpinner: boolean) => {
+		this.setState({ isLoading: shouldShowLoadingSpinner })
 	}
 
 	render() {
