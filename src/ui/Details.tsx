@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import { View, ActivityIndicator } from "react-native"
 import { NavigationEvents } from "react-navigation"
+
 import Client, { UserCategory } from "./../../lib/index"
-import { ErrorScreen } from "./ErrorScreen"
 import { Colors, Strings } from "./../resources/index"
+import { ErrorScreen } from "./ErrorScreen"
 import styles from "./../styles"
 
 import { TransactionItem, DetailsItem, DetailsCategoryItem } from "./../components/index"

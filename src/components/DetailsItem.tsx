@@ -1,8 +1,8 @@
 import React from "react"
 import { View, Text } from "react-native"
 
-import styles from "./../styles"
 import { Strings } from "./../resources/index"
+import styles from "./../styles"
 
 type Props = {
 	transaction: any

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { View, FlatList, ActivityIndicator, Alert } from "react-native"
+import { View, FlatList, ActivityIndicator } from "react-native"
 
 import Client from "./../../lib/index"
 import { TransactionItem } from "./../components/index"
@@ -50,7 +50,10 @@ export class Transactions extends Component<Props, State> {
 
 		await client.fetchTransactions()
 			.then((response: Object[]) => {
-				this.setState({ transactions: response })
+				this.setState({
+					transactions: response,
+					hasError: false
+				})
 			}).catch((err: any) => {
 				this.setState({ hasError: true })
 			})
@@ -69,13 +72,7 @@ export class Transactions extends Component<Props, State> {
 	}
 
 	_onPressTryAgain = () => {
-		const { transactions } = this.state
-
-		if (transactions == null) {
-			this._getTransactionList()
-		} else {
-			this.setState({ hasError: false })
-		}
+		this._getTransactionList()
 	}
 
 	_onTransactionItemClicked = (transactionID: string | number | undefined) => {
@@ -97,8 +94,8 @@ export class Transactions extends Component<Props, State> {
 				}
 				{hasError && !isLoading &&
 					<ErrorScreen
-					errorMessage={Strings.ERROR_MESSAGE_TRANSACTIONS}
-					errorButton={Strings.TRY_AGAIN}
+						errorMessage={Strings.ERROR_MESSAGE_TRANSACTIONS}
+						errorButton={Strings.TRY_AGAIN}
 						onActionButtonClicked={() => this._onPressTryAgain()}
 					/>
 				}

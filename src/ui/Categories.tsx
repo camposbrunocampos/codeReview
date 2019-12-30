@@ -1,11 +1,11 @@
 import React, { Component } from "react"
-import { View, FlatList, ActivityIndicator, Alert } from "react-native"
-import Client from "../../lib/index"
+import { View, FlatList, ActivityIndicator } from "react-native"
 
-import { ErrorScreen } from "./ErrorScreen"
-import styles from "../styles"
+import Client from "../../lib/index"
 import { CategoryItem } from "../components/index"
 import { Colors, Strings } from "./../resources/index"
+import { ErrorScreen } from "./ErrorScreen"
+import styles from "../styles"
 
 type Props = {
 	navigation: any

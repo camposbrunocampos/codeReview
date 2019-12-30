@@ -1,9 +1,9 @@
 import React from "react"
 import { View, TouchableHighlight, Text } from "react-native"
 
-import styles from "./../styles"
 import { Colors } from "./../resources/index"
 import Check from "./../icons/check.svg"
+import styles from "./../styles"
 
 type Props = {
 	categoryName: string,

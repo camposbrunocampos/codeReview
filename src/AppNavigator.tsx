@@ -10,8 +10,7 @@ const AppNavigator = createStackNavigator({
 }, {
 		defaultNavigationOptions: {
 			headerTitleStyle: { color: Colors.PRIMARY_TEXT },
-			headerStyle: { 
-				marginBottom: Dimens.MARGIN_MEDIUM,
+			headerStyle: {
 				borderBottomWidth: 0
 			},
 			headerTintColor: Colors.HIGHLIGHT_COLOR

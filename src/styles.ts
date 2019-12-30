@@ -3,18 +3,20 @@ import { Colors, Dimens } from "./resources/index"
 
 export default StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		backgroundColor: Colors.BACKGROUND_COLOR,
+		paddingTop: Dimens.PADDING_MEDIUM
 	},
 	cardItemContainer: {
 		justifyContent: "space-between",
-		backgroundColor: Colors.BACKGROUND_COLOR,
+		backgroundColor: Colors.WHITE,
 		paddingTop: Dimens.PADDING_XLARGE,
 		paddingRight: Dimens.PADDING_LARGE,
 		paddingBottom: Dimens.PADDING_XLARGE,
 		paddingLeft: Dimens.PADDING_LARGE,
 		marginBottom: Dimens.MARGIN_XSMALL
 	},
-	categoriesListItem:  {
+	categoriesListItem: {
 		height: 50,
 		marginBottom: 1
 	},
@@ -76,11 +78,11 @@ export default StyleSheet.create({
 	loadingContainer: {
 		position: "absolute",
 		left: 0,
-    right: 0,
-    top: 0,
+		right: 0,
+		top: 0,
 		bottom: 0,
-    alignItems: "center",
-    justifyContent: "center"
+		alignItems: "center",
+		justifyContent: "center"
 	},
 	row: {
 		flexDirection: "row"

@@ -1,8 +1,8 @@
 import React from "react"
 import { View, Text, Button } from "react-native"
 
-import styles from "./../styles"
 import { Strings, Colors } from "./../resources/index"
+import styles from "./../styles"
 
 type Props = {
 	errorMessage: string,
