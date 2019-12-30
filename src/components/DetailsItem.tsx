@@ -13,10 +13,10 @@ export const DetailsItem = (props: Props) => {
 	const { transaction } = props
 
 	const purchaseDateTime = new Date(transaction.purchaseTime)
-	//This could be done with the moment.js library
+	//This formatiing could also be done with the moment.js library
 	const month = purchaseDateTime.toLocaleString('default', { month: 'short' })
 	const day = purchaseDateTime.getDay()
-	const time = purchaseDateTime.toLocaleTimeString([], { timeStyle: 'short' })
+	const time = purchaseDateTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', hour12: true })
 	const formattedPurchaseDateTime = month + " " + day + ", " + time
 
 	return (
