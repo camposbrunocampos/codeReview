@@ -8,6 +8,7 @@ import { CategoryItem } from "../components/index"
 import { Colors, Strings } from "./../resources/index"
 
 type Props = {
+	navigation: any
 }
 
 type State = {
@@ -70,13 +71,11 @@ export class Categories extends Component<Props, State> {
 		if (client !== null) {
 			await client.updateTransactionUserCategory(transactionID, categoryID)
 				.then((response: any) => {
-					console.log(response)
-					if (response != null && response !== undefined) {
-						this._onPressGoBack()
-					}
 				}).catch((err: any) => {
-					this._showAlert()
-					this.setState({ selectedCategoryID: previousSelectedCategoryID })
+					this.setState({
+						selectedCategoryID: previousSelectedCategoryID,
+						hasError: true
+					})
 				})
 		}
 		this.setState({ isLoading: false })
@@ -96,21 +95,8 @@ export class Categories extends Component<Props, State> {
 		}
 	}
 
-	_onPressGoBack = () => {
-		this.props.navigation.navigate('Details')
-	}
-
-	_showAlert = () => {
-		Alert.alert(
-			Strings.ALERT_TITLE,
-			Strings.ALERT_MESSAGE,
-			{
-				text: Strings.OK,
-				style: 'cancel',
-			}
-			,
-			{ cancelable: false },
-		);
+	_onPressAlertOk = () => {
+		this.setState({ hasError: false })
 	}
 
 	render() {
@@ -127,7 +113,9 @@ export class Categories extends Component<Props, State> {
 				}
 				{hasError && !isLoading &&
 					<ErrorScreen
-						onActionButtonClicked={() => this._onPressGoBack()}
+						errorMessage={Strings.ERROR_MESSAGE_CATEGORY}
+						errorButton={Strings.OK}
+						onActionButtonClicked={() => this._onPressAlertOk()}
 					/>
 				}
 			</View>

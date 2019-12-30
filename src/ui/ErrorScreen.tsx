@@ -5,19 +5,22 @@ import styles from "./../styles"
 import { Strings, Colors } from "./../resources/index"
 
 type Props = {
+	errorMessage: string,
+	errorButton: string,
 	onActionButtonClicked: () => any
 }
 
 export const ErrorScreen = (props: Props) => {
 
-	const { onActionButtonClicked } = props
+	const { errorMessage, errorButton, onActionButtonClicked } = props
 
 	return (
 		<View style={styles.errorScreenContainer}>
-			<Text style={styles.error}>{Strings.ERROR_MESSAGE}</Text>
+			<Text style={styles.errorTitle}>{Strings.ERROR_TITLE}</Text>
+			<Text>{errorMessage}</Text>
 			<Button
 				color={Colors.HIGHLIGHT_COLOR}
-				title={Strings.GO_BACK}
+				title={errorButton}
 				onPress={() => onActionButtonClicked()} />
 		</View>
 	)

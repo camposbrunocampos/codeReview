@@ -1,20 +1,21 @@
 import React, { Component } from "react"
-import { View, FlatList, ActivityIndicator } from "react-native"
+import { View, FlatList, ActivityIndicator, Alert } from "react-native"
 
-import { TransactionItem } from "./../components/index"
 import Client from "./../../lib/index"
+import { TransactionItem } from "./../components/index"
+import { Colors, Strings } from "./../resources/index"
 import { ErrorScreen } from "./ErrorScreen"
-import { Colors } from "./../resources/index"
 import styles from "./../styles"
 
 type Props = {
+	navigation: any
 }
 
 type State = {
 	client: any,
 	transactions: Array<Object>,
 	clickedTransactionID: string | number | undefined,
-	transactionDetails: Object[],
+	transactionDetails: any,
 	hasError: boolean,
 	isLoading: boolean
 }
@@ -30,7 +31,7 @@ export class Transactions extends Component<Props, State> {
 			client: null,
 			transactions: [],
 			clickedTransactionID: "",
-			transactionDetails: [],
+			transactionDetails: null,
 			hasError: false,
 			isLoading: false
 		}
@@ -56,39 +57,6 @@ export class Transactions extends Component<Props, State> {
 		this.setState({ isLoading: false })
 	}
 
-	_getTransactionDetails = async () => {
-		const { client, clickedTransactionID } = this.state
-		this.setState({
-			hasError: false,
-			isLoading: true
-		})
-
-		if (client != null && clickedTransactionID !== null) {
-			await client.fetchTransaction(clickedTransactionID)
-				.then((response: Object[]) => {
-					if (response !== null && response !== undefined) {
-						this.setState({
-							transactionDetails: response,
-							hasError: false
-						})
-						this._goToDetailsScreen()
-					} else {
-						this.setState({ hasError: true })
-					}
-				}).catch((err: any) => {
-					this.setState({ hasError: true })
-				})
-			this.setState({ isLoading: false })
-		}
-	}
-
-	_goToDetailsScreen = () => {
-		const { transactionDetails } = this.state
-		const transactionCategory = transactionDetails.userCategory
-
-		this.props.navigation.navigate('Details', { transactionDetails, transactionCategory })
-	}
-
 	_renderItem = (transaction: { id: string | number | undefined; merchant: { name: string; merchantCategory: { name: string; }; }; amount: number; }) => {
 		if (transaction) {
 			return (
@@ -100,7 +68,7 @@ export class Transactions extends Component<Props, State> {
 		}
 	}
 
-	_onPressGoBack = () => {
+	_onPressTryAgain = () => {
 		const { transactions } = this.state
 
 		if (transactions == null) {
@@ -111,8 +79,7 @@ export class Transactions extends Component<Props, State> {
 	}
 
 	_onTransactionItemClicked = (transactionID: string | number | undefined) => {
-		this.setState({ clickedTransactionID: transactionID })
-		this._getTransactionDetails()
+		this.props.navigation.navigate('Details', { transactionID })
 	}
 
 	render() {
@@ -130,7 +97,9 @@ export class Transactions extends Component<Props, State> {
 				}
 				{hasError && !isLoading &&
 					<ErrorScreen
-						onActionButtonClicked={() => this._onPressGoBack()}
+					errorMessage={Strings.ERROR_MESSAGE_TRANSACTIONS}
+					errorButton={Strings.TRY_AGAIN}
+						onActionButtonClicked={() => this._onPressTryAgain()}
 					/>
 				}
 			</View>

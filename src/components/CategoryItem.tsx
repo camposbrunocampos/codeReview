@@ -19,7 +19,7 @@ export const CategoryItem = (props: Props) => {
 		<TouchableHighlight
 			onPress={onItemClicked}
 			underlayColor={Colors.BACKGROUND_COLOR}>
-			<View style={[styles.cardItemContainer, styles.row]}>
+			<View style={[styles.cardItemContainer, styles.categoriesListItem, styles.row]}>
 				<Text style={styles.categoryItem}>{categoryName}</Text>
 				{isChecked && <Check style={styles.categoryIcon} color={Colors.HIGHLIGHT_COLOR} width={20} height={20} />}
 			</View>

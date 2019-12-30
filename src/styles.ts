@@ -14,6 +14,10 @@ export default StyleSheet.create({
 		paddingLeft: Dimens.PADDING_LARGE,
 		marginBottom: Dimens.MARGIN_XSMALL
 	},
+	categoriesListItem:  {
+		height: 50,
+		marginBottom: 1
+	},
 	merchantInfoContainer: {
 		justifyContent: "center",
 	},
@@ -65,8 +69,9 @@ export default StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center"
 	},
-	error: {
-		fontSize: Dimens.FONT_LARGE
+	errorTitle: {
+		fontSize: Dimens.FONT_LARGE,
+		fontWeight: "bold"
 	},
 	loadingContainer: {
 		position: "absolute",
