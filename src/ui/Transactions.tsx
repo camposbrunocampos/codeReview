@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { View, FlatList, ActivityIndicator } from "react-native"
 
-import Client from "./../../lib/index"
+import Client, { Transaction } from "./../../lib/index"
 import { TransactionItem } from "./../components/index"
 import { Colors, Strings } from "./../resources/index"
 import { ErrorScreen } from "./ErrorScreen"
@@ -12,26 +12,24 @@ type Props = {
 }
 
 type State = {
-	client: any,
+	client: Client,
 	transactions: Array<Object>,
-	clickedTransactionID: string | number | undefined,
-	transactionDetails: any,
+	clickedTransactionID: string,
 	hasError: boolean,
 	isLoading: boolean
 }
 
 export class Transactions extends Component<Props, State> {
 	static navigationOptions = {
-		title: 'Transactions'
+		title: Strings.TRANSACTIONS
 	}
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			client: null,
-			transactions: [],
+			client: new Client(),
+			transactions: {} as Array<Transaction>,
 			clickedTransactionID: "",
-			transactionDetails: null,
 			hasError: false,
 			isLoading: false
 		}
@@ -42,11 +40,8 @@ export class Transactions extends Component<Props, State> {
 	}
 
 	_getTransactionList = async () => {
-		const client = new Client()
-		this.setState({
-			client,
-			isLoading: true
-		})
+		const { client } = this.state
+		this.setState({ isLoading: true })
 
 		await client.fetchTransactions()
 			.then((response: Object[]) => {
@@ -60,7 +55,7 @@ export class Transactions extends Component<Props, State> {
 		this.setState({ isLoading: false })
 	}
 
-	_renderItem = (transaction: { id: string | number | undefined; merchant: { name: string; merchantCategory: { name: string; }; }; amount: number; }) => {
+	_renderItem = (transaction: Transaction) => {
 		if (transaction) {
 			return (
 				<TransactionItem
@@ -75,7 +70,7 @@ export class Transactions extends Component<Props, State> {
 		this._getTransactionList()
 	}
 
-	_onTransactionItemClicked = (transactionID: string | number | undefined) => {
+	_onTransactionItemClicked = (transactionID: string) => {
 		this.props.navigation.navigate('Details', { transactionID })
 	}
 

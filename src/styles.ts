@@ -37,6 +37,7 @@ export default StyleSheet.create({
 	},
 	detailsTitle: {
 		fontSize: Dimens.FONT_MEDIUM,
+		textTransform: "uppercase",
 		fontWeight: "600",
 		color: Colors.PRIMARY_TEXT,
 		marginBottom: Dimens.MARGIN_SMALL

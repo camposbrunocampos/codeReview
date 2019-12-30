@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { View, FlatList, ActivityIndicator } from "react-native"
 
-import Client from "../../lib/index"
+import Client, { UserCategory } from "../../lib/index"
 import { CategoryItem } from "../components/index"
 import { Colors, Strings } from "./../resources/index"
 import { ErrorScreen } from "./ErrorScreen"
@@ -12,8 +12,8 @@ type Props = {
 }
 
 type State = {
-	client: any,
-	categoriesList: Object[],
+	client: Client,
+	categoriesList: Array<Object>,
 	selectedCategoryID: string,
 	previousSelectedCategoryID: string,
 	hasError: boolean,
@@ -23,14 +23,14 @@ type State = {
 export class Categories extends Component<Props, State> {
 
 	static navigationOptions = {
-		title: 'Change Category'
+		title: Strings.CHANGE_CATEGORY
 	}
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			client: null,
-			categoriesList: [],
+			client: new Client(),
+			categoriesList: {} as Array<UserCategory>,
 			selectedCategoryID: this.props.navigation.getParam('transactionCategoryID'),
 			previousSelectedCategoryID: "",
 			hasError: false,
@@ -43,9 +43,8 @@ export class Categories extends Component<Props, State> {
 	}
 
 	_getCategoriesList = async () => {
-		const client = new Client()
+		const { client } = this.state
 		this.setState({
-			client,
 			previousSelectedCategoryID: this.state.selectedCategoryID,
 			isLoading: true
 		})

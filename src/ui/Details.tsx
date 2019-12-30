@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { View, ActivityIndicator } from "react-native"
 import { NavigationEvents } from "react-navigation"
 
-import Client, { UserCategory } from "./../../lib/index"
+import Client, { Transaction } from "./../../lib/index"
 import { Colors, Strings } from "./../resources/index"
 import { ErrorScreen } from "./ErrorScreen"
 import styles from "./../styles"
@@ -14,8 +14,8 @@ type Props = {
 }
 
 type State = {
-	client: any,
-	transaction: any,
+	client: Client,
+	transaction: Object,
 	transactionID: string,
 	userCategoryName: string,
 	userCategoryID: string,
@@ -26,16 +26,16 @@ type State = {
 export class Details extends Component<Props, State> {
 
 	static navigationOptions = {
-		title: 'Details'
+		title: Strings.DETAILS
 	}
 
 	constructor(props: Props) {
 		super(props)
 		this.state = {
-			client: null,
-			transaction: null,
+			client: new Client(),
+			transaction: {} as Transaction,
 			transactionID: this.props.navigation.getParam('transactionID'),
-			userCategoryName: "No Category",
+			userCategoryName: Strings.NO_CATEGORY,
 			userCategoryID: "",
 			hasError: false,
 			isLoading: true
@@ -43,14 +43,7 @@ export class Details extends Component<Props, State> {
 	}
 
 	componentDidMount() {
-		this._initializeComponent()
-	}
-
-	_initializeComponent = () => {
-		const client = new Client()
-		this.setState({ client },
-			() => this._getTransactionDetails()
-		)
+		this._getTransactionDetails()
 	}
 
 	_getTransactionDetails = async () => {
@@ -59,7 +52,7 @@ export class Details extends Component<Props, State> {
 		if (client != null && transactionID !== null) {
 			this.setState({ isLoading: true })
 			await client.fetchTransaction(transactionID)
-				.then((response: Object[]) => {
+				.then((response) => {
 					if (response !== null && response !== undefined) {
 						this.setState({
 							transaction: response,
@@ -85,7 +78,7 @@ export class Details extends Component<Props, State> {
 				userCategoryID: userCategory.id
 			})
 			await client.fetchUserCategory(userCategory.id)
-				.then((response: UserCategory) => {
+				.then((response) => {
 					if (response !== null && response !== undefined) {
 						this.setState({
 							userCategoryName: response.name,
