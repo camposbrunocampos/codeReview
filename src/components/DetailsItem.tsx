@@ -14,6 +14,14 @@ export const DetailsItem = (props: Props) => {
 
 	const purchaseDateTime = new Date(transaction.purchaseTime)
 	//This formatiing could also be done with the moment.js library
+
+	// you could have an utils folder with this logic, I can see this date being passed already formatted to this component as a props.
+	/*
+	something like:
+	--utils
+	---dateUtils.js
+	-----getFormattedDate()
+	*/
 	const month = purchaseDateTime.toLocaleString('default', { month: 'short' })
 	const day = purchaseDateTime.getDay()
 	const time = purchaseDateTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', hour12: true })
