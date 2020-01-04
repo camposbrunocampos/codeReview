@@ -84,14 +84,14 @@ export class Transactions extends Component<Props, State> {
 				{!hasError && !isLoading &&
 					<FlatList
 						data={transactions}
-						renderItem={({ item }) => this._renderItem(item)}
+						renderItem={this._renderItem}
 					/>
 				}
 				{hasError && !isLoading &&
 					<ErrorScreen
 						errorMessage={Strings.ERROR_MESSAGE_TRANSACTIONS}
 						errorButton={Strings.TRY_AGAIN}
-						onActionButtonClicked={() => this._onPressTryAgain()}
+						onActionButtonClicked={this._onPressTryAgain}
 					/>
 				}
 			</View>
