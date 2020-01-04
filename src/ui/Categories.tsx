@@ -112,14 +112,14 @@ export class Categories extends Component<Props, State> {
 				{!hasError && !isLoading &&
 					<FlatList
 						data={categoriesList}
-						renderItem={({ item }) => this._renderItem(item)}
+						renderItem={this._renderItem}
 					/>
 				}
 				{hasError && !isLoading &&
 					<ErrorScreen
 						errorMessage={Strings.ERROR_MESSAGE_CATEGORY}
 						errorButton={Strings.OK}
-						onActionButtonClicked={() => this._onPressAlertOk()}
+						onActionButtonClicked={(this._onPressAlertOk}
 					/>
 				}
 			</View>
