@@ -21,7 +21,7 @@ export const ErrorScreen = (props: Props) => {
 			<Button
 				color={Colors.HIGHLIGHT_COLOR}
 				title={errorButton}
-				onPress={() => onActionButtonClicked()} />
+				onPress={onActionButtonClicked} />
 		</View>
 	)
 }

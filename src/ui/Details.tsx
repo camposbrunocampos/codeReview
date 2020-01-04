@@ -72,7 +72,7 @@ export class Details extends Component<Props, State> {
 		const { client, transaction } = this.state
 		const userCategory = transaction.integration.category
 
-		if (client !== null && userCategory !== null && userCategory !== undefined) {
+		if (client !== null && userCategory !== null && userCategory !== undefined) { // you could likely create an utility method which would check for nullability and undefined. you could create an utils file for that maybe (?)
 			this.setState({ userCategoryID: userCategory.id })
 			await client.fetchUserCategory(userCategory.id)
 				.then((response) => {
@@ -119,9 +119,7 @@ export class Details extends Component<Props, State> {
 				{!hasError && !isLoading &&
 					<View>
 						<NavigationEvents
-							onWillFocus={payload => {
-								this._getTransactionDetails()
-							}}
+							onWillFocus={this._getTransactionDetails}
 						/>
 						<TransactionItem
 							transaction={transaction}
@@ -131,14 +129,14 @@ export class Details extends Component<Props, State> {
 						/>
 						<DetailsCategoryItem
 							category={userCategoryName}
-							onItemClicked={() => this._onAccountingCellCLick()} />
+							onItemClicked={this._onAccountingCellCLick} />
 					</View>
 				}
 				{hasError && !isLoading &&
 					<ErrorScreen
 						errorMessage={Strings.ERROR_MESSAGE_TRANSACTION_DETAILS}
 						errorButton={Strings.TRY_AGAIN}
-						onActionButtonClicked={() => this._onPressAlertOk()}
+						onActionButtonClicked={this._onPressAlertOk}
 					/>
 				}
 			</View>

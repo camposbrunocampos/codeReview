@@ -119,7 +119,7 @@ export class Categories extends Component<Props, State> {
 					<ErrorScreen
 						errorMessage={Strings.ERROR_MESSAGE_CATEGORY}
 						errorButton={Strings.OK}
-						onActionButtonClicked={(this._onPressAlertOk}
+						onActionButtonClicked={this._onPressAlertOk}
 					/>
 				}
 			</View>
