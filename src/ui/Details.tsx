@@ -49,7 +49,8 @@ export class Details extends Component<Props, State> {
 	_getTransactionDetails = async () => {
 		const { client, transactionID } = this.state
 
-		if (client != null && transactionID !== null) {
+		if (client != null && transactionID !== null) { // i don't think you need this check, as you initialize client and transaction already in constructor
+		//it seems they will never be null, you can likely delete this condition.
 			this.setState({ isLoading: true })
 			await client.fetchTransaction(transactionID)
 				.then((response) => {
